@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-export const baseTaskSchema = z.object({
-  title: z.string()
+export const baseProjectSchema = z.object({
+  name: z.string()
     .min(1, "Title is required")
     .max(255, "Title must be less than 255 characters"),
   description: z.string()
@@ -11,19 +11,19 @@ export const baseTaskSchema = z.object({
   startDate: z.date()
     .nullable()
     .optional(),
-  dueDate: z.date()
+  endDate: z.date()
     .nullable()
     .optional()   
 })
-export const createTaskSchema = baseTaskSchema
+export const createProjectSchema = baseProjectSchema
 
-export const updateTaskSchema = baseTaskSchema.partial()
+export const updateProjectSchema = baseProjectSchema.partial()
 
-export const taskSchema = baseTaskSchema.extend({
+export const taskSchema = baseProjectSchema.extend({
   id: z.number().int().positive()
 })
 
 // Type definitions
 export type Task = z.infer<typeof taskSchema>
-export type CreateTask = z.infer<typeof createTaskSchema>
-export type UpdateTask = z.infer<typeof updateTaskSchema>
+export type CreateTask = z.infer<typeof createProjectSchema>
+export type UpdateTask = z.infer<typeof updateProjectSchema>
