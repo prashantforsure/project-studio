@@ -1,11 +1,18 @@
-// app/api/teams/route.ts
+
+import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
-
-
 export async function GET() {
   try {
+    const session = await getAuthSession();
+        if (!session?.user) {
+            return NextResponse.json({
+                message: "Unauthorized"
+            }, {
+                status: 403
+            });
+        }
     const teams = await db.team.findMany();
     
     const teamsWithUsernames = await Promise.all(
