@@ -65,5 +65,9 @@ export const TaskSchema = z.object({
     path: ["dueDate"]
    });
    
-   
+   export const TaskStatusSchema = z.object({
+    status: z.enum(TaskStatus)
+    .nullable()
+    .optional()})
+    export type TaskPartialInput = z.infer<typeof TaskStatusSchema>;
    export type TaskInput = z.infer<typeof TaskSchema>;
